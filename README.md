@@ -3,7 +3,6 @@
 The Interactive CLI is a library that makes it easy to create interactive command line scripts in Node.js by utilizing promises.
 
 [![npm version](https://img.shields.io/npm/v/interactive-cli.svg?style=flat-square)](https://www.npmjs.com/package/interactive-cli)
-[![npm downloads](https://img.shields.io/npm/dm/interactive-cli.svg?style=flat-square)](https://www.npmjs.com/package/interactive-cli)
 
 ## Installation
 
