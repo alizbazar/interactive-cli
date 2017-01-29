@@ -1,0 +1,26 @@
+{
+  "name": "interactive-cli",
+  "version": "1.0.0",
+  "description": "Making it easy to create interactive command line scripts in Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alizbazar/interactive-cli.git"
+  },
+  "author": "Albert Nazander <alizbazar@alizweb.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alizbazar/interactive-cli/issues"
+  },
+  "homepage": "https://github.com/alizbazar/interactive-cli#readme",
+  "engines": {
+    "node": "6.9.4"
+  },
+  "dependencies": {
+    "lodash": "4.17.4",
+    "prompt": "1.0.0"
+  }
+}
