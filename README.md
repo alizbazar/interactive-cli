@@ -56,7 +56,6 @@ a) Create a new user
 b) Delete a user
 q) Quit
 ?:  q
-~/dev/node/interactive-cli >>
 ```
 
 ## The Gist
