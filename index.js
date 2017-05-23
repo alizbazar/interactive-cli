@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const prompter = require('prompt');
+const prompt = require('prompt');
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
 
 
@@ -87,7 +87,7 @@ function promptOptions (text, optionMap, defaultOptionText = '') {
   if (defaultOption) {
     console.log('(default): ' + defaultOption)
   }
-  return prompt()
+  return promptFields()
   .then(rawRes => {
     const res = rawRes && rawRes.toLowerCase()
 
@@ -113,8 +113,8 @@ function promptOptions (text, optionMap, defaultOptionText = '') {
 
 // make a simple deferred/promise out of the prompt function
 const initPrompter = _.once(() => {
-  prompter.start();
-  prompter.message = "";
+  prompt.start();
+  prompt.message = "";
 })
 
 const startWith = (initialQuestion, initialOptions, initialHandler) => {
@@ -168,7 +168,7 @@ const exit = () => process.exit()
  * @param  {String or Array} fieldsArg  Single field (String) or multiple fields (Array) to fill
  * @return {Promise({String})}          Single response (String) or multiple responses (Object<key, response>)
  */
-const prompt = function(textArg, fieldsArg) {
+const promptFields = function(textArg, fieldsArg) {
   initPrompter()
   let text
   let fields
@@ -185,14 +185,14 @@ const prompt = function(textArg, fieldsArg) {
   return new Promise(function(resolve, reject) {
 
     if (_.isArray(fields)) {
-      prompter.get(fields, function(err, value) {
+      prompt.get(fields, function(err, value) {
         if (err) {
           return reject(err)
         }
         resolve(value);
       });
     } else if (_.isString(fields)) {
-      prompter.get([fields], function(err, value) {
+      prompt.get([fields], function(err, value) {
         if (err) {
           return reject(err)
         }
@@ -209,7 +209,7 @@ const prompt = function(textArg, fieldsArg) {
 };
 
 const promptToContinue = function(obj) {
-  return prompt(['continue? (y/n)']).then(function(res) {
+  return promptFields(['continue? (y/n)']).then(function(res) {
     if (res['continue? (y/n)'].toLowerCase() == 'y') {
       return obj;
     } else {
@@ -221,6 +221,7 @@ const promptToContinue = function(obj) {
 
 module.exports = {
   prompt,
+  promptFields,
   promptToContinue,
   promptOptions,
   startWith,

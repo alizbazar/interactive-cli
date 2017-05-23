@@ -1,5 +1,5 @@
 const {
-  prompt,
+  promptFields,
   promptToContinue,
   promptOptions,
   startWith,
@@ -47,10 +47,10 @@ new Promise((resolve, reject) => {
 
 function createUser (api) {
   const user = {}
-  return prompt("Enter user's email", "email")
+  return promptFields("Enter user's email", "email")
   .then(email => { user.email = email })
 
-  .then(() => prompt("What's the name for the user", ["firstname", "lastname"]))
+  .then(() => promptFields("What's the name for the user", ["firstname", "lastname"]))
   .then(res => {
     user.firstname = res.firstname
     user.lastname = res.lastname
