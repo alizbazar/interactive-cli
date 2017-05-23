@@ -218,10 +218,25 @@ const promptToContinue = function(obj) {
   });
 };
 
+const promptPassword = function() {
+  return new Promise((resolve, reject) => {
+    prompt.get([{
+      hidden: true,
+      name: 'password',
+    }], function (err, data) {
+      if (err) {
+        return reject(err)
+      }
+      resolve(data.password)
+    })
+  })
+}
+
 
 module.exports = {
   prompt,
   promptFields,
+  promptPassword,
   promptToContinue,
   promptOptions,
   startWith,
