@@ -2,6 +2,25 @@ const _ = require('lodash')
 const prompt = require('prompt');
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
 
+const numberToLetters = i => {
+  if (i >= ALPHABET.length) {
+    const firstLetter = Math.floor(i / ALPHABET.length)
+    const secondLetter = i - ALPHABET.length * firstLetter
+    return `${ALPHABET[firstLetter]}${ALPHABET[secondLetter]}`
+  }
+  return ALPHABET[i]
+}
+
+const lettersToNumber = letters => {
+  if (letters.length === 2) {
+    const firstLetter = ALPHABET.indexOf(letters[0])
+    const secondLetter = ALPHABET.indexOf(letters[1])
+    return firstLetter * ALPHABET.length + secondLetter
+  } else if (letters.length === 1) {
+    return ALPHABET.indexOf(letters[0])
+  }
+}
+
 
 // Error that should be thrown to exit to the start of the application
 function DontContinue(message) {
@@ -81,7 +100,7 @@ function promptOptions (text, optionMap, defaultOptionText = '') {
   const optionKeys = Object.keys(options)
 
   optionKeys.forEach((optionKey, i) => {
-    console.log(`${ALPHABET[i]}) ${options[optionKey]}`)
+    console.log(`${numberToLetters(i)}) ${options[optionKey]}`)
   })
   console.log("q) Quit")
   if (defaultOption) {
@@ -92,7 +111,7 @@ function promptOptions (text, optionMap, defaultOptionText = '') {
     const res = rawRes && rawRes.toLowerCase()
 
     let selectedOption
-    const i = ALPHABET.indexOf(res)
+    const i = lettersToNumber(res)
 
     // Only return null if defaultOptionText was specified
     if (!res && defaultOption) {
