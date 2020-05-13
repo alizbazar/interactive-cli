@@ -19,5 +19,8 @@
   "dependencies": {
     "lodash": "^4.17.15",
     "prompt": "^1.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.5"
   }
 }

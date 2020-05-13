@@ -55,8 +55,8 @@ const ARGS = (() => {
     } else if (lastArg) {
       args[lastArg].push(originalArg)
 
-    // First two args are irrelevant as they are path to node process and the script file itself
-    // However, store all other possible arguments before --arg is found
+      // First two args are irrelevant as they are path to node process and the script file itself
+      // However, store all other possible arguments before --arg is found
     } else if (i >= 2) {
       if (!args['root']) {
         args['root'] = []
@@ -86,7 +86,7 @@ const ARGS = (() => {
  * @param  {String} defaultOptionArg Description of the default option
  * @return {[type]}                  key or null if default selected
  */
-function promptOptions (text, optionMap, defaultOptionText = '') {
+function promptOptions(text, optionMap, defaultOptionText = '') {
   let options = optionMap
   let defaultOption = defaultOptionText
 
@@ -107,27 +107,27 @@ function promptOptions (text, optionMap, defaultOptionText = '') {
     console.log('(default): ' + defaultOption)
   }
   return promptFields()
-  .then(rawRes => {
-    const res = rawRes && rawRes.toLowerCase()
+    .then(rawRes => {
+      const res = rawRes && rawRes.toLowerCase()
 
-    let selectedOption
-    const i = lettersToNumber(res)
+      let selectedOption
+      const i = lettersToNumber(res)
 
-    // Only return null if defaultOptionText was specified
-    if (!res && defaultOption) {
-      selectedOption = null
-    } else if (i !== -1 && i < optionKeys.length) {
-      // As options can be array of keys or an object, return the key of the selections
-      selectedOption = options instanceof Array ? options[i] : optionKeys[i]
-    } else if (res === 'q') {
-      throw new DontContinue()
-    } else {
-      console.log('Please select one of the options!')
-      return promptOptions(text, optionMap, defaultOptionText)
-    }
+      // Only return null if defaultOptionText was specified
+      if (!res && defaultOption) {
+        selectedOption = null
+      } else if (i !== -1 && i < optionKeys.length) {
+        // As options can be array of keys or an object, return the key of the selections
+        selectedOption = options instanceof Array ? options[i] : optionKeys[i]
+      } else if (res === 'q') {
+        throw new DontContinue()
+      } else {
+        console.log('Please select one of the options!')
+        return promptOptions(text, optionMap, defaultOptionText)
+      }
 
-    return selectedOption
-  })
+      return selectedOption
+    })
 }
 
 // make a simple deferred/promise out of the prompt function
@@ -138,37 +138,37 @@ const initPrompter = _.once(() => {
 
 const startWith = (initialQuestion, initialOptions, initialHandler) => {
   return promptOptions(initialQuestion, initialOptions)
-  .catch(err => {
-    if (err instanceof DontContinue) {
-      throw new ExitScript()
-    }
-    throw err
-  })
-  .then(initialHandler)
-  .then(() => {console.log("\n" + 'All DONE!')})
-  .catch(err => {
-    if (err.message === 'canceled') {
-      throw new ExitScript()
-    }
-
-    if (err instanceof ExitScript) {
-      if (err.message) {
-        console.log("\n" + err.message)
+    .catch(err => {
+      if (err instanceof DontContinue) {
+        throw new ExitScript()
       }
-      // exit if requested
       throw err
-
-    } else if (err instanceof DontContinue) {
-      if (err.message) {
-        console.log("\n" + err.message)
+    })
+    .then(initialHandler)
+    .then(() => { console.log("\n" + 'All DONE!') })
+    .catch(err => {
+      if (err.message === 'canceled') {
+        throw new ExitScript()
       }
 
-    } else {
-    // report error and restart from beginning
-      console.error('ERROR:', err.message, err.code, err.stack);
-    }
-  })
-  .then(() => startWith(initialQuestion, initialOptions, initialHandler))
+      if (err instanceof ExitScript) {
+        if (err.message) {
+          console.log("\n" + err.message)
+        }
+        // exit if requested
+        throw err
+
+      } else if (err instanceof DontContinue) {
+        if (err.message) {
+          console.log("\n" + err.message)
+        }
+
+      } else {
+        // report error and restart from beginning
+        console.error('ERROR:', err.message, err.code, err.stack);
+      }
+    })
+    .then(() => startWith(initialQuestion, initialOptions, initialHandler))
 }
 
 const onFinalError = err => {
@@ -187,7 +187,7 @@ const exit = () => process.exit()
  * @param  {String or Array} fieldsArg  Single field (String) or multiple fields (Array) to fill
  * @return {Promise({String})}          Single response (String) or multiple responses (Object<key, response>)
  */
-const promptFields = function(textArg, fieldsArg) {
+const promptFields = function (textArg, fieldsArg) {
   initPrompter()
   let text
   let fields
@@ -201,17 +201,17 @@ const promptFields = function(textArg, fieldsArg) {
   if (text) {
     console.log("\n" + text);
   }
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
 
     if (_.isArray(fields)) {
-      prompt.get(fields, function(err, value) {
+      prompt.get(fields, function (err, value) {
         if (err) {
           return reject(err)
         }
         resolve(value);
       });
     } else if (_.isString(fields)) {
-      prompt.get([fields], function(err, value) {
+      prompt.get([fields], function (err, value) {
         if (err) {
           return reject(err)
         }
@@ -227,8 +227,8 @@ const promptFields = function(textArg, fieldsArg) {
   });
 };
 
-const promptToContinue = function(obj) {
-  return promptFields(['continue? (y/n)']).then(function(res) {
+const promptToContinue = function (obj) {
+  return promptFields(['continue? (y/n)']).then(function (res) {
     if (res['continue? (y/n)'].toLowerCase() == 'y') {
       return obj;
     } else {
@@ -237,7 +237,7 @@ const promptToContinue = function(obj) {
   });
 };
 
-const promptPassword = function() {
+const promptPassword = function () {
   return new Promise((resolve, reject) => {
     prompt.get([{
       hidden: true,
