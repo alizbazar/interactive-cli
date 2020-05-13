@@ -1,6 +1,6 @@
 {
   "name": "interactive-cli",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Making it easy to create interactive command line scripts in Node.js",
   "main": "index.js",
   "scripts": {

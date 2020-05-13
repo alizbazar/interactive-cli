@@ -71,7 +71,6 @@ const ARGS = (() => {
     }
     return `${arg}${addition}`
   }).join(', ')
-  console.log('Launched with args:', argsStringified)
 
   return args
 })()
