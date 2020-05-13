@@ -184,7 +184,7 @@ const onFinalError = err => {
   if (err instanceof ExitScript) {
     return
   }
-  console.log('THIS SHOULD NEVER APPEAR', err.code, err.message, err)
+  console.log('UNCAUGHT ERROR BEFORE EXIT', err.code, err.message, err)
 }
 
 const exit = () => process.exit()
