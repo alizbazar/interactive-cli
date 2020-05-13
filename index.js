@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const prompt = require('prompt');
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
 
@@ -65,7 +64,7 @@ const ARGS = (() => {
     }
   }
 
-  const argsStringified = _.map(args, (params, arg) => {
+  const argsStringified = Object.entries(args).map(([arg, params]) => {
     let addition = ''
     if (params.length) {
       addition = `: [${params.join(', ')}]`
@@ -130,8 +129,18 @@ function promptOptions(text, optionMap, defaultOptionText = '') {
     })
 }
 
+const once = func => (() => {
+  let hasRun = false
+  return () => {
+    if (!hasRun) {
+      hasRun = true
+      func()
+    }
+  }
+})()
+
 // make a simple deferred/promise out of the prompt function
-const initPrompter = _.once(() => {
+const initPrompter = once(() => {
   prompt.start();
   prompt.message = "";
 })
@@ -203,14 +212,14 @@ const promptFields = function (textArg, fieldsArg) {
   }
   return new Promise(function (resolve, reject) {
 
-    if (_.isArray(fields)) {
+    if (fields instanceof Array) {
       prompt.get(fields, function (err, value) {
         if (err) {
           return reject(err)
         }
         resolve(value);
       });
-    } else if (_.isString(fields)) {
+    } else if (typeof fields === 'string') {
       prompt.get([fields], function (err, value) {
         if (err) {
           return reject(err)
