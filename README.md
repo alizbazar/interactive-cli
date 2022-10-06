@@ -4,6 +4,10 @@ The Interactive CLI is a library that makes it easy to create interactive comman
 
 [![npm version](https://img.shields.io/npm/v/interactive-cli.svg?style=flat-square)](https://www.npmjs.com/package/interactive-cli)
 
+This plugin use `prompt` dependece. 
+
+For update you can check full documentation on: https://github.com/flatiron/prompt
+
 ## Installation
 
 Using npm:
@@ -148,6 +152,38 @@ function deleteUser(api) {
       console.log(`User ${data.users[data.selection]} was successfully deleted!`)
     })
 }
+```
+
+### Capture miltiline
+
+```javascript
+const { promptFields, promptToContinue, promptOptions, startWith, onFinalError, exit, DontContinue } = require('../')
+
+new Promise((resolve, reject) => {
+			resolve({
+				test: () => Promise.resolve(),
+			});
+		})
+			.then((res) => {
+				return promptFields([
+							{
+								name: "Line",
+								description: "Multiline",
+								type: "array",
+								required: true,
+								message: "Press Control+C or Ctrl+C to terminate insert.",
+								conform: (value) => {
+									return true;
+								},
+							},
+						])
+					)
+					.then((res) => {
+            console.log(res.Line);
+					});
+			})
+			.catch(onFinalError)
+			.then(exit);
 ```
 
 ### License
